@@ -10,35 +10,37 @@
 
 #include "Funciones.h"
 
-int tamanio_archivo(int fd){
-	struct stat buf;
-	fstat(fd, &buf);
-	return buf.st_size;
-}
 
-
-/////////////////gcc2 fuente salida
-
-int main(int argc,char* argv[]) {
-
-	if (argc>3){
-
-		fprintf(stderr,"Por favor solo ingrese el archivo fuente y el nombre que desea darle al ejecutable. \n");
-		return (1);
-
-	}else{
-
-		if (argc <3){
-			if (argc==2)
-				fprintf(stderr,"Por favor ingrese el nombre que desea darle al ejecutable.\n");
-			if (argc==1)
-				fprintf(stderr,"Por favor ingrese el nombre del archivo fuente y el nombre que desea darle al ejecutable.\n");
-			return (1);
-		}
+int main(int argc, char * argv[]) {
+	/*if(argc==1){
+		printf("Debe ingresar una cadena en linea de comandos\n");
+		return -1;
+	}
+	if(argc!=2){
+		printf("Numero incorrecto de argumentos\n");
+		return -2;
 	}
 
-	redireccionar( argv[1],argv[2],"script");
+	argv[1]=strdup("+3");
+	if(!verifica(argv[1])){
+		printf("Los caracteres no pertenecen al alfabeto\n");
+		return -3;
+	}
+	if(automata(argv[1])){
+		printf("Es palabra del lenguaje\n");
+	}else{
+		printf("No es palabra del lenguaje\n");
+	}*/
 
 
-	return 0;
+	char * ruta = strdup("archivo.m");
+	archivo = fopen(ruta, "rb");
+	if (archivo == NULL){
+		printf("El archivo no existe");
+		abort();
+	}
+
+	Objetivo();
+	fclose(archivo);
+	return EXIT_SUCCESS;
 }
