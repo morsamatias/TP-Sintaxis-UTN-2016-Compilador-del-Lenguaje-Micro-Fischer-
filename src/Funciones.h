@@ -9,13 +9,6 @@
 #include <ctype.h>
 
 
-#include <sys/mman.h>
-#include <errno.h>
-#include <sys/stat.h>
-#include <string.h>
-#include <unistd.h>
-
-
 ///////Defino Variables
 
 typedef enum {

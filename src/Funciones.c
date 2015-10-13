@@ -19,7 +19,7 @@ int validacion (char* archivo,char c){
 	while(archivo[i]!='.'){
 		i=i+1;
 	}
-	if ((archivo[i+1] == c)&&(archivo[i+2] =='/0')){
+	if ((archivo[i+1] == c)&&(archivo[i+2] =='\0')){
 		return 1;
 	}else{
 		return 0;
