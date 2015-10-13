@@ -21,14 +21,15 @@ int main(int argc,char* argv[]) {
 		}
 	}
 	if (validacion(argv[1],'m') && validacion(argv[2],'o')){
-		char * ruta = strdup(argv[1]);
-		archivo = fopen(ruta, "rb");
+		archivo = fopen(argv[1], "rb");
 		if (archivo == NULL){
 			printf("El archivo no existe\n");
 			return -1;
 		}
+		archivoSalida = fopen(argv[2], "wb+");
 		Objetivo();
 		fclose(archivo);
+		fclose(archivoSalida);
 	}else{
 		printf("La extension del archivo no es valida\n");
 	}
