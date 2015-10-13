@@ -10,6 +10,25 @@ char TS[1000][33] = {"inicio", "fin", "leer", "escribir"};
 int TS_token[1000] = {INICIO, FIN, LEER, ESCRIBIR};
 int posUltimoSimbolo = 4;
 
+/*----------------------------------------------------Validacion-----------------------------------*/
+
+
+int validacion (char* archivo,char c){
+
+	int i=0;
+	while(archivo[i]!='.'){
+		i=i+1;
+	}
+	if ((archivo[i+1] == c)&&(archivo[i+2] =='/0')){
+		return 1;
+	}else{
+		return 0;
+	}
+}
+
+
+
+
 /* ------------------------------------------PARSER---------------------------------------------------------------*/
 
 void Match(TOKEN token){
