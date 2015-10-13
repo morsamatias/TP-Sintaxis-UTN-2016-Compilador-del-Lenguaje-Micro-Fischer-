@@ -59,6 +59,7 @@ int columna(int c);
 void AgregarCaracter(int caracter, int posicion);
 TOKEN EsReservada(void);
 void LimpiarBuffer(void);
+int validacion(char* arch,char c);
 
 
 #endif /* Funciones_H_ */
