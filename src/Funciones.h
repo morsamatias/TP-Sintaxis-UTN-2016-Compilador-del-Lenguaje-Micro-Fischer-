@@ -31,10 +31,9 @@ char buffer[TAMLEX];
 TOKEN tokenActual;
 int flagToken;
 
-typedef struct
-{
-char identifi[TAMLEX];
-TOKEN t; /* t=0, 1, 2, 3 Palabra Reservada, t=ID=4 Identificador */
+typedef struct{
+	char identificador[TAMLEX];
+	TOKEN t; /* t=0, 1, 2, 3 Palabra Reservada, t=ID=4 Identificador */
 } RegTS;
 
 
@@ -53,6 +52,7 @@ void ErrorLexico();
 TOKEN ProximoToken(void);
 void Identificador(REG_EXPRESION * presul);
 void ListaExpresiones(void);
+void ListaIdentificadores(void);
 
 TOKEN Scanner(void);
 int VerificarLongitud(void);
@@ -73,9 +73,9 @@ char * Extraer(REG_EXPRESION * preg);
 int Buscar(char * id, RegTS * TS, TOKEN * t);
 void Colocar(char * id, RegTS * TS);
 void Chequear(char * s);
+void Asignar(REG_EXPRESION izq, REG_EXPRESION der);
 void Comenzar(void);
 void Terminar(void);
-void Asignar(REG_EXPRESION izq, REG_EXPRESION der);
 
 
 #endif /* Funciones_H_ */
