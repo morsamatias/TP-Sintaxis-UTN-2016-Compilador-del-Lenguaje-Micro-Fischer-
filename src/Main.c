@@ -3,7 +3,7 @@
 
 /////////////////gcc2 fuente salida
 
-int main(int argc,char* argv[]) {
+int main(int argc, char* argv[]) {
 
 	if (argc>3){
 

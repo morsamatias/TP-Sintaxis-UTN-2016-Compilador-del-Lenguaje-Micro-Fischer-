@@ -7,6 +7,7 @@
 #include "Funciones.h"
 
 RegTS TS[1000] = { {"inicio", INICIO}, {"fin", FIN}, {"leer", LEER}, {"escribir", ESCRIBIR}, {"$", 99} };
+int numeroVariableTemporal=1;
 
 /*----------------------------------------------------Validacion-----------------------------------*/
 
@@ -106,7 +107,6 @@ void Expresion(REG_EXPRESION * resultado){
 }
 
 void Primaria(REG_EXPRESION * resultado){
-	//todo: VERIFICAR SI ESTA BIEN PRIMARIA
 	switch(ProximoToken()){
 		case ID:
 			Identificador(resultado);
@@ -188,9 +188,11 @@ void Identificador(REG_EXPRESION * resultado){
 
 /* -----------------------------------------------SCANNER------------------------------------------------------*/
 
-int estadoFinal(int e){
-	if ( e == 0 || e == 1 || e == 3 || e == 11 || e == 14 )
-		return 0;
+int esEstadoFinal(int e){
+	switch (e){
+		case 0: case 1: case 3: case 11: case 14:
+			return 0;
+	}
 	return 1;
 }
 
@@ -226,8 +228,7 @@ TOKEN Scanner(void){
 			AgregarCaracter(c, i);
 			i++;
 		}
-	}
-	while (!estadoFinal(estado_actual) && !(estado_actual == 14) );
+	}while (!esEstadoFinal(estado_actual));
 
 	switch(estado_actual){
 		case 2:
@@ -263,14 +264,6 @@ TOKEN Scanner(void){
 
 	}
 	return FDT;
-}
-
-int VerificarLongitud(void){
-	int i;
-	while (buffer[i]!='\0'){
-		i++;
-	}
-	return i;
 }
 
 int columna(int c){
@@ -337,6 +330,7 @@ REG_EXPRESION ProcesarId(void){
 char * ProcesarOp(void){
 	return buffer;
 }
+
 void Leer(REG_EXPRESION in){
 	Generar("Read", in.nombre, "Entera", "");
 }
@@ -347,20 +341,24 @@ void Escribir(REG_EXPRESION out){
 
 REG_EXPRESION GenInfijo(REG_EXPRESION e1, char * op, REG_EXPRESION e2){
 	REG_EXPRESION reg;
-	static int numTemp = 1;
-	char cadTemp[TAMLEX] = "Temp&";
-	char cadNum[TAMLEX];
-	char cadOp[TAMLEX];
-	if (op[0] == '-') strcpy(cadOp, "Restar");
-	if (op[0] == '+') strcpy(cadOp, "Sumar");
-	sprintf(cadNum, "%d", numTemp);
-	numTemp++;
-	strcat(cadTemp, cadNum);
-	if ( e1.clase == ID) Chequear(Extraer(&e1));
-	if ( e2.clase == ID) Chequear(Extraer(&e2));
-	Chequear(cadTemp);
-	Generar(cadOp, Extraer(&e1), Extraer(&e2), cadTemp);
-	strcpy(reg.nombre, cadTemp);
+	char cadenaTemporal[TAMLEX] = "Temp&";
+	char numero[TAMLEX];
+	char cadenaOperador[TAMLEX];
+
+	if (op[0] == '-')
+		strcpy(cadenaOperador, "Restar");
+	if (op[0] == '+')
+		strcpy(cadenaOperador, "Sumar");
+	sprintf(numero, "%d", numeroVariableTemporal);
+	numeroVariableTemporal++;
+	strcat(cadenaTemporal, numero);
+	if (e1.clase == ID)
+		Chequear(Extraer(&e1));
+	if (e2.clase == ID)
+		Chequear(Extraer(&e2));
+	Chequear(cadenaTemporal);
+	Generar(cadenaOperador, Extraer(&e1), Extraer(&e2), cadenaTemporal);
+	strcpy(reg.nombre, cadenaTemporal);
 	return reg;
 }
 
@@ -376,8 +374,8 @@ void Generar(char * co, char * a, char * b, char * c){
 	fprintf(archivoSalida, "\n");
 }
 
-char * Extraer(REG_EXPRESION * preg){
-	return preg->nombre;
+char * Extraer(REG_EXPRESION * reg){
+	return reg->nombre;
 }
 
 int Buscar(char * id, RegTS * TS, TOKEN * t){
@@ -395,7 +393,7 @@ int Buscar(char * id, RegTS * TS, TOKEN * t){
 void Colocar(char * id, RegTS * TS){
 	int i = 4;
 	while (strcmp("$", TS[i].identificador)) i++;
-	if (i < 999){
+	if (i <= 999){
 		strcpy(TS[i].identificador, id );
 		TS[i].t = ID;
 		strcpy(TS[++i].identificador, "$" );

@@ -55,12 +55,11 @@ void ListaExpresiones(void);
 void ListaIdentificadores(void);
 
 TOKEN Scanner(void);
-int VerificarLongitud(void);
-void AlmacenarEnTS(TOKEN token);
 int columna(int c);
 void AgregarCaracter(int caracter, int posicion);
 void LimpiarBuffer(void);
-int validacion(char* arch,char c);
+int validacion(char* arch, char c);
+int esEstadoFinal(int e);
 
 REG_EXPRESION ProcesarCte(void);
 REG_EXPRESION ProcesarId(void);
@@ -69,7 +68,7 @@ void Leer(REG_EXPRESION in);
 void Escribir(REG_EXPRESION out);
 REG_EXPRESION GenInfijo(REG_EXPRESION e1, char * op, REG_EXPRESION e2);
 void Generar(char * co, char * a, char * b, char * c);
-char * Extraer(REG_EXPRESION * preg);
+char * Extraer(REG_EXPRESION * reg);
 int Buscar(char * id, RegTS * TS, TOKEN * t);
 void Colocar(char * id, RegTS * TS);
 void Chequear(char * s);
