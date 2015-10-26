@@ -134,12 +134,10 @@ void OperadorAditivo(char * resultado){
 
 void ErrorSintactico(){
 	printf("ERROR SINTACTICO");
-	abort();
 }
 
 void ErrorLexico(){
 	printf("ERROR LEXICO");
-	abort();
 }
 
 void ListaIdentificadores(void){
